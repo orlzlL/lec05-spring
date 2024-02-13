@@ -22,4 +22,9 @@ public class BookDAOImpl implements BookDAO {
         /* 설명. HashMap의 value들만 뽑아 ArrayList 형태로 반환(Map -> List) */
         return new ArrayList<>(bookList.values());
     }
+
+    @Override
+    public BookDTO searchBookBySequence(int sequence) {
+        return bookList.get(sequence);
+    }
 }
