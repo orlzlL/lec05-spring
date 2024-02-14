@@ -1,4 +1,4 @@
-package com.ohgiraffers.section02.initdestroy;
+package com.ohgiraffers.section03.properties.subsection01.properties;
 
 import com.ohgiraffers.common.Beverage;
 import com.ohgiraffers.common.Bread;
@@ -8,8 +8,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Application {
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
         ApplicationContext context
                 = new AnnotationConfigApplicationContext(ContextConfiguration.class);
 
@@ -39,10 +39,5 @@ public class Application {
         System.out.println("cart2에 담긴 물품: " + cart2.getItems());
 
         System.out.println(System.identityHashCode(cart1) == System.identityHashCode(cart2));
-
-        /* 설명. main 메소드 종료 전(application 종료 전)에 의도적으로 container를 소멸(bean들도 소멸) */
-        ((AnnotationConfigApplicationContext)context).close();
-
-
     }
 }
