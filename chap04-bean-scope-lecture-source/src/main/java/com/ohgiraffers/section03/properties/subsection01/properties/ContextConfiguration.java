@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Scope;
 @PropertySource("section03/properties/subsection01/properties/product-info.properties")
 public class ContextConfiguration {
 
-    @Value("${bread.carpBread.name}")
+    @Value("${bread.carpbread.name}")
     private String carpBreadName;
 
     @Value("${bread.carpbread.price}")
