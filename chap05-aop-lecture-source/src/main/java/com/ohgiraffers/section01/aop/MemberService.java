@@ -15,14 +15,13 @@ public class MemberService {
         this.memberDAO = memberDAO;
     }
 
-    //Primary concern (주요관심사)
     public List<MemberDTO> findAllMembers() {
-        System.out.println("target -> findAllMembers() 실행");
+        System.out.println("target -> findAllMembers 실행");
         return memberDAO.selectAllMembers();
     }
 
     public MemberDTO findMemberBy(int index) {
-        System.out.println("target -> findMemberBy() 실행");
+        System.out.println("target -> findMemberBy 실행");
         return memberDAO.selectMemberBy(index);
     }
 }

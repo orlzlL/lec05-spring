@@ -12,12 +12,12 @@ public class Application {
          *   스프링에서는 런타임 시 개발자가 등록한 빈을 애플리케이션 내에서 사용할 수 있게 하는 기술이기도 하다.
          *
          *  필기.
-         *   reflection은 강력한 도구이지만 무분별하게 사용해서는 안 된다.
+         *   reflection은 강력한 도구이지만 무분별하게 사용해서는 안된다.
          *   1. 오버헤드 발생: 성능 저하를 발생할 수 있기 때문에 민감한 애플리케이션에서는 사용하지 않는다.
          *   2. 캡슐화 저해: private로 설정한 member(또는 필드)에 접근 가능하기 때문에 코드 기능이 저하되며
-         *                  여러가지 문제를 야기할 수 있다.
-        **/
-
+         *                 여러가지 문제를 야기할 수 있다.
+        * */
+        
         /* 설명. 1. Class 타입의 Class 메타정보 추출 */
         Class class1 = Account.class;
         System.out.println("class1 = " + class1);
@@ -42,7 +42,7 @@ public class Application {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        
+
         /* 설명. 2. 필드 정보 추출 */
         Field[] fields = Account.class.getDeclaredFields();
         for (Field field : fields) {
@@ -50,20 +50,23 @@ public class Application {
                         + ", type: " + field.getType()
                         + ", name: " + field.getName());
         }
-        
+
         /* 설명. 3. 생성자 정보 추출 */
-        Constructor[] constructors = Account.class.getConstructors();       // 생성자들이 배열로 담김
+        Constructor[] constructors = Account.class.getConstructors();   // 생성자들이 배열로 담김
         for (Constructor constructor : constructors) {
             System.out.println("name: " + constructor.getName());
-            
+
             Class[] params = constructor.getParameterTypes();
             for (Class param : params) {
                 System.out.println("paramType: " + param.getTypeName());
             }
         }
 
+
         try {
-            Account acc = (Account)constructors[0].newInstance("20", "110-223-123456", "1234", 10000);
+            Account acc = (Account) constructors[0]
+                    .newInstance("20", "110-223-123456", "1234", 10000);
+            System.out.println(acc.getBalance());
         } catch (InstantiationException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -72,15 +75,15 @@ public class Application {
             throw new RuntimeException(e);
         }
 
-        /*  설명. 4. 메소드 정보 추출 */
+        /* 설명. 4. 메소드 정보 추출 */
         Method[] methods = Account.class.getMethods();
         Method getBalanceMethod = null;
         for (Method method : methods) {
             System.out.println(Modifier.toString(method.getModifiers()) + " "
-                                + method.getReturnType().getSimpleName()
-                                + method.getName());
+                           + method.getReturnType().getSimpleName() + " "
+                           + method.getName());
 
-            if("getBalance".equals(method.getName())){
+            if("getBalance".equals(method.getName())) {
                 getBalanceMethod = method;
             }
         }
