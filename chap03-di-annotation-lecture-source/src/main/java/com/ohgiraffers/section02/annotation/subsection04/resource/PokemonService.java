@@ -10,7 +10,7 @@ import java.util.List;
 public class PokemonService {
 
     /* 설명.
-     *  @Qualifier와 마찬가지로 @Primary보다 웃너순위 높게 우리가 원하는 bean이름(id)으로 하나의 빈을
+     *  @Qualifier와 마찬가지로 @Primary보다 우선순위 높게 우리가 원하는 bean이름(id)으로 하나의 빈을
      *  주입받을 수 있다.
     **/
 //    @Resource(name = "charmander")

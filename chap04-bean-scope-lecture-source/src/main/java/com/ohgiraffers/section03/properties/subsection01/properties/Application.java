@@ -27,6 +27,7 @@ public class Application {
         ShoppingCart cart1 = context.getBean("cart", ShoppingCart.class);
         cart1.addItem(carpBread);
         cart1.addItem(milk);
+        cart1.addItem(water);
 
         /* 설명. 첫 번째 손님의 쇼핑 카트에 담긴 물품 확인 */
         System.out.println("cart1에 담긴 물품: " + cart1.getItems());

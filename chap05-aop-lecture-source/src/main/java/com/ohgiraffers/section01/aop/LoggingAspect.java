@@ -1,10 +1,11 @@
 package com.ohgiraffers.section01.aop;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Aspect
 @Component
@@ -37,9 +38,58 @@ public class LoggingAspect {
     @Pointcut("execution(* com.ohgiraffers.section01.aop.*Service.*(..))")
     public void logPointcut(){}
 
+    /* 설명. 1. Before Advice */
+    /* 설명.
+     *  매개변수로 쓰인 JoinPoint
+     *  : 포인트 컷으로 패치된 조인 포인트
+    **/
 //    @Before("execution(* com.ohgiraffers.section01.aop.*Service.*(..))")
     @Before("LoggingAspect.logPointcut()")
-    public void logBefore(JoinPoint joinPoint){
-        System.out.println("Before Advice 동작");
+    public void logBefore(JoinPoint joinPoint) {
+//        System.out.println("Before Advice 동작");
+        System.out.println("Before joinPoint.getTarget(): " + joinPoint.getTarget());
+        System.out.println("Before joinPoint.getSignature(): " + joinPoint.getSignature());
+        if(joinPoint.getArgs().length > 0){         // 타겟 메소드의 매개변수가 하나 이상이면
+            System.out.println("Before joinPoint.getArgs()[0]: " + joinPoint.getArgs()[0]);
+        }
+    }
+
+    /* 설명. 2. After Advice */
+    @After("LoggingAspect.logPointcut()")
+    public void logAfter(JoinPoint joinPoint){
+//        System.out.println("After Advice 동작");
+        System.out.println("After joinPoint.getTarget(): " + joinPoint.getTarget());
+        System.out.println("After joinPoint.getSignature(): " + joinPoint.getSignature());
+        if(joinPoint.getArgs().length > 0){         // 타겟 메소드의 매개변수가 하나 이상이면
+            System.out.println("After joinPoint.getArgs()[0]: " + joinPoint.getArgs()[0]);
+        }
+    }
+
+    /* 설명. 3. AfterReturning Advice */
+    /* 설명. Pointcut에 해당하는 위치가 담긴 메소드가 같은 클래스에 있으면 클래스 소속을 안 적어도 된다. */
+    /* 설명. returning에 쓰인 이름이 반환값이 넘어오는 매개변수명과 일치해야 한다. */
+    @AfterReturning(pointcut = "logPointcut", returning = "result")
+    public void logAfterReturning(JoinPoint joinPoint, Object result){
+        System.out.println("After Returning result: " + result);
+
+        /* 설명. AfterReturning Advice를 활용한 반환 값 가공도 가능하다. */
+        if(result != null && result instanceof List){
+            ((List<MemberDTO>)result).add(new MemberDTO(3L, "반환 값 가공"));
+        }
+    }
+
+    /* 설명. 4. AfterThrowing Advice */
+    /* 설명. throwing 속성 값과 매개변수명이 일치해야 한다. (exception) */
+    @AfterThrowing(pointcut = "logPointcut()", throwing = "exception")
+    public void logAfterThrowing(Throwable exception){
+        System.out.println("After Throwing exception: " + exception);
+    }
+
+    /* 설명. 5. Around Advice */
+    @Around("logPointcut()")
+    public Object logAround(ProceedingJoinPoint joinPoint){
+        Object result = null;
+        return result;
     }
 }
+
