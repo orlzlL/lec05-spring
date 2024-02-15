@@ -25,5 +25,4 @@ public class Application {
 //        System.out.println(memberService.findMemberBy(2));
 
     }
-
 }
